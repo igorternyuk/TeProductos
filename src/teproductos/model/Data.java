@@ -2,6 +2,7 @@ package teproductos.model;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class Data {
     }
     
     public Categoria getCategoria(int idCategoria) throws SQLException, CategoriaNotFoundException{
-        sql = con.prepareStatement("select * from categoria where id= ?;");
+        sql = con.prepareStatement("select * from categoria where id= ?;");        
         sql.setInt(1, idCategoria);
         resultSet = sql.executeQuery();
         if(resultSet.next()){
@@ -108,7 +109,8 @@ public class Data {
         sql.setInt(2, p.getCategoria());
         sql.setInt(3, p.getMarca());
         sql.setFloat(4, p.getPrecio());
-        sql.setString(5, p.getFecha());
+        //sql.setDate(5, new Date(2017,06,06));
+        sql.setString(5, p.getFecha().toString());
         sql.setBoolean(6, p.isTransgenic());
         sql.setBoolean(7, p.isDisponible());
         sql.executeUpdate();
@@ -130,7 +132,7 @@ public class Data {
         sql.setInt(2, p.getCategoria());
         sql.setInt(3, p.getMarca());
         sql.setFloat(4, p.getPrecio());
-        sql.setString(5, p.getFecha());
+        sql.setDate(5, p.getFecha());
         sql.setBoolean(6, p.isTransgenic());
         sql.setBoolean(7, p.isDisponible());
         sql.setInt(8, p.getId());
@@ -237,7 +239,7 @@ public class Data {
         int categoria = resultSet.getInt(3);
         int marca = resultSet.getInt(4);
         float precio = resultSet.getFloat(5);
-        String fecha = resultSet.getDate(6).toString();
+        Date fecha = resultSet.getDate(6);
         boolean trans = resultSet.getBoolean(7);
         boolean disponible = resultSet.getBoolean(8);
         Producto p = new Producto(id, nombre, categoria, marca, precio, fecha,

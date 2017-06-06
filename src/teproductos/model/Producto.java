@@ -1,4 +1,7 @@
 package teproductos.model;
+
+import java.sql.Date;
+
 /**
  *
  * @author igor
@@ -9,7 +12,8 @@ public class Producto {
     int categoria;
     int marca;
     float precio;
-    String fecha;
+    //String fecha;
+    Date fecha;
     boolean transgenic;
     boolean disponible;
 
@@ -17,7 +21,7 @@ public class Producto {
     }
 
     public Producto(String nombre, int categoria, int marca, float precio,
-           String fecha, boolean transgenic, boolean disponible) {
+           Date fecha, boolean transgenic, boolean disponible) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.marca = marca;
@@ -28,7 +32,7 @@ public class Producto {
     }
 
     public Producto(int id, String nombre, int categoria, int marca, float precio,
-                    String fecha, boolean transgenic, boolean disponible) {
+                    Date fecha, boolean transgenic, boolean disponible) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -80,11 +84,11 @@ public class Producto {
         this.disponible = disponible;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

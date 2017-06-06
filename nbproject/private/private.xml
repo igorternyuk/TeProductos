@@ -4,15 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/igor/prj/java/TeProductos/src/teproductos/conexion/db_script.sql</file>
-            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/DAO/Marca.java</file>
-            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/DAO/Categoria.java</file>
+            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/model/Producto.java</file>
             <file>file:/home/igor/prj/java/TeProductos/src/teproductos/exceptions/CategoriaNotFoundException.java</file>
-            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/DAO/Producto.java</file>
+            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/model/Data.java</file>
+            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/model/Categoria.java</file>
             <file>file:/home/igor/prj/java/TeProductos/src/teproductos/visual/renderer/Renderer.java</file>
-            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/DAO/DAO.java</file>
             <file>file:/home/igor/prj/java/TeProductos/src/teproductos/tmproductos/TMProductos.java</file>
+            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/model/Marca.java</file>
             <file>file:/home/igor/prj/java/TeProductos/src/teproductos/visual/Ventana.java</file>
             <file>file:/home/igor/prj/java/TeProductos/src/teproductos/conexion/Conexion.java</file>
+            <file>file:/home/igor/prj/java/TeProductos/src/teproductos/conexion/config/config.txt</file>
         </group>
     </open-files>
 </project-private>

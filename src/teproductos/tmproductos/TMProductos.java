@@ -1,5 +1,6 @@
 package teproductos.tmproductos;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -128,7 +129,7 @@ public class TMProductos implements TableModel {
                 p.setPrecio((float)aValue);
                 break;
             case 5:
-                p.setFecha((String)aValue);
+                p.setFecha((Date)aValue);
                 break;
             case 6:
                 p.setTransgenic((boolean)aValue);
