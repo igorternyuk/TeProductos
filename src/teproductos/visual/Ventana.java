@@ -6,6 +6,8 @@
 package teproductos.visual;
 
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,11 +15,15 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JSpinner.DefaultEditor;
 import teproductos.model.Categoria;
 import teproductos.model.Data;
 import teproductos.model.Marca;
 import teproductos.model.Producto;
 import teproductos.tmproductos.TMProductos;
+import teproductos.validator.KeyListenerType;
+import teproductos.validator.TextFieldInputValidator;
 import teproductos.visual.renderer.Renderer;
 /**
  *
@@ -32,6 +38,8 @@ public class Ventana extends javax.swing.JFrame {
         try {
             initComponents();
             data = new Data();
+            tabla.setAutoCreateRowSorter(true);
+            agregarValidators();
             centrarVentana();
             cargarFechaCombos();
             cargarCombos();            
@@ -50,6 +58,21 @@ public class Ventana extends javax.swing.JFrame {
     
     private void centrarVentana(){
         this.setLocationRelativeTo(null);
+    }
+    
+    private void agregarValidators() {
+        DefaultEditor editorPrecio = (DefaultEditor) spinnerPrecioReg.getEditor();
+        editorPrecio.getTextField().addKeyListener(
+                new TextFieldInputValidator(KeyListenerType.NUMBERS_ONLY)
+        );
+        DefaultEditor editorPrecioMin = (DefaultEditor) spinnerPrecioMIN.getEditor();
+        editorPrecioMin.getTextField().addKeyListener(
+                new TextFieldInputValidator(KeyListenerType.NUMBERS_ONLY)
+        );
+        DefaultEditor editorPrecioMax = (DefaultEditor) spinnerPrecioMAX.getEditor();
+        editorPrecioMax.getTextField().addKeyListener(
+                new TextFieldInputValidator(KeyListenerType.NUMBERS_ONLY)
+        );
     }
     
     /**
@@ -154,7 +177,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel10.setText("MIN");
 
         spinnerPrecioMIN.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        spinnerPrecioMIN.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0E12f), Float.valueOf(1.0f)));
+        spinnerPrecioMIN.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0E12f), Float.valueOf(0.1f)));
         spinnerPrecioMIN.setEditor(new javax.swing.JSpinner.NumberEditor(spinnerPrecioMIN, ""));
         spinnerPrecioMIN.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -165,7 +188,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel11.setText("MAX");
 
         spinnerPrecioMAX.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        spinnerPrecioMAX.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0E12f), Float.valueOf(1.0f)));
+        spinnerPrecioMAX.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0E12f), Float.valueOf(0.1f)));
         spinnerPrecioMAX.setEditor(new javax.swing.JSpinner.NumberEditor(spinnerPrecioMAX, ""));
         spinnerPrecioMAX.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -527,11 +550,19 @@ public class Ventana extends javax.swing.JFrame {
         jLabel16.setText("Fecha:");
 
         spinnerPrecioReg.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        spinnerPrecioReg.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0E12f), Float.valueOf(1.0f)));
-        spinnerPrecioReg.setEditor(new javax.swing.JSpinner.NumberEditor(spinnerPrecioReg, ""));
+        spinnerPrecioReg.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0E12f), Float.valueOf(0.1f)));
+        spinnerPrecioReg.setEditor(new javax.swing.JSpinner.NumberEditor(spinnerPrecioReg, "#.####"));
         spinnerPrecioReg.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 spinnerPrecioRegStateChanged(evt);
+            }
+        });
+        spinnerPrecioReg.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                spinnerPrecioRegKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                spinnerPrecioRegKeyPressed(evt);
             }
         });
 
@@ -600,19 +631,27 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductoLayout.createSequentialGroup()
-                        .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(pnlProductoLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblID))
-                            .addComponent(jLabel13))
+                        .addComponent(jLabel16)
+                        .addGap(65, 65, 65)
+                        .addComponent(comboYear, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboMarcaReg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(spinnerPrecioReg, javax.swing.GroupLayout.PREFERRED_SIZE, 195, Short.MAX_VALUE)))
+                        .addComponent(comboMounth, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductoLayout.createSequentialGroup()
+                        .addComponent(checkBoxTransReg)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnlTrans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(checkBoxDisponibleReg))
                     .addGroup(pnlProductoLayout.createSequentialGroup()
                         .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1)
+                            .addGroup(pnlProductoLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(63, 63, 63)
+                                .addComponent(spinnerPrecioReg, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlProductoLayout.createSequentialGroup()
                                 .addComponent(btnRegistrar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -626,22 +665,10 @@ public class Ventana extends javax.swing.JFrame {
                                 .addGap(38, 38, 38)
                                 .addGroup(pnlProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(comboCategoriaReg, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 4, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductoLayout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(65, 65, 65)
-                        .addComponent(comboYear, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboMounth, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboDay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlProductoLayout.createSequentialGroup()
-                        .addComponent(checkBoxTransReg)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnlTrans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(checkBoxDisponibleReg)))
+                                    .addComponent(comboCategoriaReg, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblID)
+                                    .addComponent(comboMarcaReg, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlProductoLayout.setVerticalGroup(
@@ -739,7 +766,10 @@ public class Ventana extends javax.swing.JFrame {
     
     private void cargarFechaCombos(){
         //Cargamos los combos del año
-        for(int i = 2050; i > 1900; --i){
+        Calendar calendar = Calendar.getInstance();
+        calendar.getTime();
+        int year = calendar.get(Calendar.YEAR);
+        for(int i = year + 100; i > 1900; --i){
             comboYear.addItem(i);
             comboYearMin.addItem(i);
             comboYearMax.addItem(i);
@@ -1132,6 +1162,22 @@ public class Ventana extends javax.swing.JFrame {
     private void comboDayMaxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboDayMaxItemStateChanged
         btnBuscar.doClick();
     }//GEN-LAST:event_comboDayMaxItemStateChanged
+
+    private void spinnerPrecioRegKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spinnerPrecioRegKeyTyped
+        System.out.println("Событие ввода текста в спинер");
+        char c = evt.getKeyChar();
+        if (c != KeyEvent.VK_ENTER) {
+            if ((c >= '0' && c <= '9')
+                || c == KeyEvent.VK_BACK_SPACE
+                || c == KeyEvent.VK_DELETE
+                || c == KeyEvent.VK_PERIOD) {
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_spinnerPrecioRegKeyTyped
+
+    private void spinnerPrecioRegKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spinnerPrecioRegKeyPressed
+    }//GEN-LAST:event_spinnerPrecioRegKeyPressed
 
     /**
      * @param args the command line arguments

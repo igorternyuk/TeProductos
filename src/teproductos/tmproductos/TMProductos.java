@@ -19,6 +19,15 @@ import teproductos.exceptions.MarcaNotFoundException;
  * @author igor
  */
 public class TMProductos implements TableModel {
+    private static final int COLUMN_ID = 0;
+    private static final int COLUMN_NOMBRE = 1;
+    private static final int COLUMN_CATEGORIA = 2;
+    private static final int COLUMN_MARCA = 3;
+    private static final int COLUMN_PRECIO = 4;
+    private static final int COLUMN_FECHA = 5;
+    private static final int COLUMN_TRANSGENIC = 6;
+    private static final int COLUMN_DISPONIBLE = 7;
+    
     private final ArrayList<Producto> lista;
     private final Data dao;
     private final String[] titulos = {"ID", "Nombre", "Categoria", "Marca",
@@ -50,8 +59,10 @@ public class TMProductos implements TableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        return (columnIndex == 6 || columnIndex == 7) ? Boolean.class :
-            Object.class;
+        if(lista.isEmpty()){
+            return Object.class;
+        }
+        return getValueAt(0, columnIndex).getClass();
     }
 
     @Override
@@ -63,11 +74,11 @@ public class TMProductos implements TableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Producto p = lista.get(rowIndex);
         switch (columnIndex) {
-            case 0:
+            case COLUMN_ID:
                 return p.getId();
-            case 1:
+            case COLUMN_NOMBRE:
                 return p.getNombre();
-            case 2: {
+            case COLUMN_MARCA: {
                 try {
                     //Marca
                     return dao.getCategoria(p.getCategoria()).getNombre();
@@ -81,7 +92,7 @@ public class TMProductos implements TableModel {
                     Logger.getLogger(TMProductos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            case 3: {
+            case COLUMN_CATEGORIA: {
                 try {
                     //Categoria
                     return dao.getMarca(p.getMarca()).getNombre();
@@ -95,14 +106,14 @@ public class TMProductos implements TableModel {
                     Logger.getLogger(TMProductos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            case 4:
+            case COLUMN_PRECIO:
                 //Precio
                 return p.getPrecio();
-            case 5:
+            case COLUMN_FECHA:
                 return p.getFecha();
-            case 6:
+            case COLUMN_TRANSGENIC:
                 return p.isTransgenic();
-            case 7:
+            case COLUMN_DISPONIBLE:
                 return p.isDisponible();
             default:
                 return null;
@@ -113,29 +124,29 @@ public class TMProductos implements TableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Producto p = lista.get(rowIndex);
         switch(columnIndex){
-            case 0:
+            case COLUMN_ID:
                 p.setId((int)aValue);
                 break;
-            case 1:
+            case COLUMN_NOMBRE:
                 p.setNombre((String)aValue);
                 break;
-            case 2:
+            case COLUMN_CATEGORIA:
                 p.setCategoria((int)aValue);
                 break;
-            case 3:
+            case COLUMN_MARCA:
                 p.setMarca((int)aValue);
                 break;
-            case 4:
+            case COLUMN_PRECIO:
                 p.setPrecio((float)aValue);
                 break;
-            case 5:
+            case COLUMN_FECHA:
                 p.setFecha((Date)aValue);
                 break;
-            case 6:
-                p.setTransgenic((boolean)aValue);
+            case COLUMN_TRANSGENIC:
+                p.setTransgenic((Boolean)aValue);
                 break;
-            case 7:
-                p.setDisponible((boolean)aValue);
+            case COLUMN_DISPONIBLE:
+                p.setDisponible((Boolean)aValue);
                 break;
         }
     }

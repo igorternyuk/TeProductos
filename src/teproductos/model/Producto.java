@@ -14,14 +14,14 @@ public class Producto {
     float precio;
     //String fecha;
     Date fecha;
-    boolean transgenic;
-    boolean disponible;
+    Boolean transgenic;
+    Boolean disponible;
 
     public Producto() {
     }
 
     public Producto(String nombre, int categoria, int marca, float precio,
-           Date fecha, boolean transgenic, boolean disponible) {
+           Date fecha, Boolean transgenic, Boolean disponible) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.marca = marca;
@@ -32,7 +32,7 @@ public class Producto {
     }
 
     public Producto(int id, String nombre, int categoria, int marca, float precio,
-                    Date fecha, boolean transgenic, boolean disponible) {
+                    Date fecha, Boolean transgenic, Boolean disponible) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -76,11 +76,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public boolean isDisponible() {
+    public Boolean isDisponible() {
         return disponible;
     }
 
-    public void setDisponible(boolean disponible) {
+    public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
 
@@ -100,11 +100,11 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public boolean isTransgenic() {
+    public Boolean isTransgenic() {
         return transgenic;
     }
 
-    public void setTransgenic(boolean transgenic) {
+    public void setTransgenic(Boolean transgenic) {
         this.transgenic = transgenic;
     }
 }

@@ -216,15 +216,6 @@ public class Data {
         System.out.println("SQL=" + sb.toString());
         sql = con.prepareStatement(sb.toString());
         resultSet = sql.executeQuery();
-        /*sql = con.prepareStatement("select producto.nombre, categoria.nombre, "
-            + "marca.nombre, precio, fecha, transgenic, disponible from "
-            + "producto, categoria, marca where producto.marca = marca.id "
-            + "and producto.categoria = categoria.id "
-            + "and (producto.nombre like ? or marca.nombre like ?) "
-            + "and producto.fecha > '2017-02-25' and "
-            + "producto.fecha < '2017-05-06') and"
-            + "(transgenic = true or disponible = false)"
-            + "order by producto.precio desc;");*/
         ArrayList<Producto> lista = new ArrayList<>();
         while(resultSet.next()){
             Producto p = sacarProducto(resultSet);
